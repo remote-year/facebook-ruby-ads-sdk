@@ -45,7 +45,8 @@ module FacebookAds
       def paginate(path, query: {})
         query[:limit] ||= 100
         limit = query[:limit]
-        response = get(path, query: query.merge(fields: self::FIELDS.join(',')), objectify: false)
+        fields = query[:fields] || self::FIELDS
+        response = get(path, query: query.merge(fields: fields.join(',')), objectify: false)
         data = response['data'].nil? ? [] : response['data']
 
         if data.length == limit
